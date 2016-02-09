@@ -1,0 +1,147 @@
+set enc=utf-8
+set nocompatible			  " be iMproved, required
+filetype off				  " required
+inoremap kl <ESC>
+noremap ö l
+noremap l k
+noremap k j
+noremap j h
+let mapleader = "\<SPACE>"
+inoremap <C-l> <Up>
+inoremap <C-k> <Down>
+inoremap <C-ö> <Right>
+inoremap <C-j> <Left>
+ 
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+ 
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+" Plugin 'bling/vim-airline'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tomasr/molokai'
+Plugin 'troydm/easybuffer.vim'
+Plugin 'KKPMW/moonshine-vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'rking/ag.vim'
+"Plugin 'myusuf3/numbers.vim'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'duff/vim-scratch'
+Plugin 'StanAngeloff/php.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'SirVer/ultisnips'
+Plugin 'itchyny/lightline.vim'
+Plugin 'Yggdroot/indentLine'
+Plugin 'majutsushi/tagbar'
+Plugin 'vimoutliner/vimoutliner'
+Plugin 'adoy/vim-php-refactoring-toolbox'
+Plugin 'thinca/vim-quickrun'
+Plugin 'bpearson/vim-phpcs'
+"Plugin 'Valloric/YouCompleteMe'
+ 
+" All of your Plugins must be added before the following line
+call vundle#end()			 " required
+filetype plugin indent on	 " required
+ 
+syntax enable
+colorscheme moonshine
+ 
+" CTRL-P
+let g:ctrlp_custom_ignore = {
+				 \ 'dir':  '\.git$\|\.hg$\|\.svn\|bower_components\|node_modules$',
+				 \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+let g:ctrlp_working_path_mode = 'ra'
+ 
+" NERDTree config
+map <C-e> :NERDTreeToggle<CR>
+ 
+" Vim airline
+set laststatus=2
+ 
+" JSX
+let g:jsx_ext_required = 0
+ 
+" Map ctrl-movement keys to window switching
+
+ 
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"" Show extra whitespace
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,trail:␣
+set list
+set pastetoggle=<F2>
+ 
+set tabstop=4
+set softtabstop=4
+ 
+set cursorline
+ 
+set wildmenu
+ 
+set lazyredraw
+ 
+set showmatch
+ 
+set incsearch			" search as characters are entered
+set hlsearch			" highlight matches
+ 
+set foldenable			" enable folding
+set foldlevelstart=10	" open most folds by default
+set foldnestmax=10		" 10 nested fold max
+ 
+" space open/closes folds
+nnoremap <space> za
+ 
+set foldmethod=indent	" fold based on indent level
+ 
+ 
+let mapleader=","		" leader is comma
+ 
+" allows cursor change in tmux mode
+if exists('$TMUX')
+	let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+	let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+	let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+	let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+ 
+set tags=./tags;~/sites
+ 
+" White characters {{{
+set autoindent
+set tabstop=4
+set softtabstop=4
+set textwidth=120
+set shiftwidth=4
+set wrap
+set formatoptions=qrn1
+if exists('+colorcolumn')
+  set colorcolumn=+1
+endif
+ 
+" Trailing whitespace {{{
+" Only shown when not in insert mode so I don't go insane.
+augroup trailing
+	au!
+	au InsertEnter * :set listchars-=trail:␣
+	au InsertLeave * :set listchars+=trail:␣
+augroup END
+ 
+set splitright
+set relativenumber
+let Vimphpcs_Standard='/home/prisjakt/sites/prisjakt/current/scripts/code_review/PrisjaktStandard'
+ 
+set completeopt-=preview

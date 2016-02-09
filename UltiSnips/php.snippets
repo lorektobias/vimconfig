@@ -1,0 +1,260 @@
+snippet ddcp "snipsnap" i
+'debug' => ['displayCurrentPage'${1:, 'useUrl' => '${2:url}'}],
+endsnippet
+
+snippet ddm "snipsnap" i
+'debug' => ['displayMatches'${1:, 'useUrl' => '${2:url}'}],
+endsnippet
+
+snippet dds "snipsnap" i
+'debug' => ['displaySliceOutput'${1:, 'useUrl' => '${2:url}'}],
+endsnippet
+
+snippet matt "snipsnap" i
+${1:name}\s*=\s*$2${3:content}$2
+endsnippet
+
+snippet pdurl "snipsnap" i
+'direct_url' => ['if', ${1:group}, ['.', \$scanner->baseUrl, ${1}], 'currUrl'],
+endsnippet
+
+snippet pocr "snipsnap" i
+'owncatRegexp' => '%<${1:tag}\s*${2:type}=$3${4:value}$3>(.*)</$1>%Usi',
+endsnippet
+
+snippet pmd5 "snipsnap" i
+['md5', ${2}],
+endsnippet
+
+snippet ddss "snipsnap" i
+'debug' => ['displaySliceInSliceOutput'${1:, 'useUrl' => '${2:url}'}],
+endsnippet
+
+snippet pappend "snipsnap" i
+['.', '${1:first}', '${4:second}'${5:, '${6:third}'}],
+endsnippet
+
+snippet ppm "snipsnap" i
+['pm', '%${1:regexp}%Usi', ${2:'matchElement'}, ${3:return group}],
+endsnippet
+
+snippet ppr "snipsnap" i
+['pr', '%${1:regexp}%Usi', '${2:replacement}', ${3:source}],
+endsnippet
+
+snippet mainreg "snipsnap" i
+'regexp' => '%
+	${3:regexp}
+%Usix',
+'urlGroup' => '${2:pma}',
+'owncatGroup' => ${1:0},
+
+endsnippet
+
+snippet sli "snipsnap" i
+'sliceRegexp' => '%${3:regexp}%Usi',
+'sliceType' => '${2:pma}',
+'sliceGroup' => ${1:0},
+endsnippet
+
+snippet slisli "snipsnap" i
+'sliceInSliceRegexp' => '%${3:regexp}%Usi',
+'sliceInSliceType' => '${2:pma}',
+'sliceInSliceGroup' => ${1:0},
+endsnippet
+
+snippet gatt "snipsnap" i
+$1\s*=\s*$2([^$2]*)$2
+endsnippet
+
+snippet ghref "snipsnap" i
+href\s*=\s*["\']*?([^"\']*)(?:[\'"])
+endsnippet
+
+snippet gjson "snipsnap" i
+"${1}"\s*:\s*${2}([^${2},]*)${2},
+endsnippet
+
+snippet gnot "snipsnap" i
+([^${1}]*)
+endsnippet
+
+snippet gsrc "snipsnap" i
+src\s*=\s*["\']*?([^"\']*)[\'"]
+endsnippet
+
+snippet gtxt "snipsnap" i
+[^>]*>\s*?([^<]*)\s*?<
+endsnippet
+
+snippet jsps "snipsnap" i
+\s*?
+endsnippet
+
+snippet jump_tags "snipsnap" i
+(?:<[^>]*>|\s)*?
+endsnippet
+
+snippet not "snipsnap" i
+[^${1}]*
+endsnippet
+
+snippet optional "snipsnap" i
+(?:${1:content})??
+endsnippet
+
+snippet repeat "snipsnap" i
+(?:${1:content}){${2:}}
+endsnippet
+
+snippet until "snipsnap" i
+[^$1]*$1
+endsnippet
+
+snippet repåäö "snipsnap" i
+\$${1:var} = str_replace(
+	['å', 'ä', 'ö', ,'æ' 'Å','Ä','Ö', 'Ø'],
+	['%C3%A5', '%C3%A4', '%C3%B6', '%C3%85', '%C3%84', '%C3%96', '%C3%98'],
+	\$${1:var}
+);
+endsnippet
+
+snippet smcr "snipsnap" i
+	\$scanner->setMainCategoryRegexp(
+	[
+		'regexp' => '%${9:<\s*a[^>]*href\s*=\s*[\'"]([^\'"]+)[\'"][^>]*>(?:<[^>]*>|\s)*?([^<]+)\s*<}%Usi',
+		'type' => 'pma',
+		'urlGroup' => 1,
+		'owncatGroup' => 2,
+		${10:'findGroup' => ${11:false},}
+		
+		${5:'sliceRegexp' => '%${6:regexp}%Usi',
+		'sliceType' => '${7:pm}',
+		'sliceGroup' => ${8:0},}
+		
+		${1:'sliceInSliceRegexp' => '%${2:regexp}%Usi',
+		'sliceInSliceType' => '${3:pm}',
+		'sliceInSliceGroup' => ${4:0},}
+		
+		${12:'skip' => ${13:false},}
+		${14:'appendToUrl' => '${15}',}
+		${16:'debug' => ['displayMatches'],}
+	]
+);
+endsnippet
+
+snippet snpr "snipsnap" i
+\$scanner->setNextPageRegexp(
+	[
+		'regexp' => '%${1:regexp}%Usi',
+		
+		'iterations' => 1,
+		${2:'debug' => ['displayMatches'],}
+	]
+);
+endsnippet
+
+snippet spr "snipsnap" i
+\$scanner->setProductRegexp(
+	[
+		'regexp' => '%${9:
+			src\s*=\s*["\']*?([^"\']*)[\'"].*
+			href\s*=\s*["\']*?([^"\']*)(?:[\'"])[^>]*>
+			([^<]*)<.*
+			class="[^"]*\s*price\s*[^"]*">\s*?([^<]*)\s*?<
+		}%Usix',
+		'type' => 'pm',
+
+		'sliceRegexp' => '%${5:(${6:reg}).*(?=\1|\$)}%Usix',
+		'sliceType' => '${7:pma}',
+		'sliceGroup' => ${8:0},
+
+		${1:'sliceInSliceRegexp' => '%${2:regexp}%Usix',
+		'sliceInSliceType' => '${3:pm}',
+		'sliceInSliceGroup' => ${4:0},}
+
+		// ==================== //
+		'pris_beskrivning' => ['hu', 3),
+		'pris_unikkod' => 2,
+		'own_cat' => 0,
+		'direct_url' => ['.', \$scanner->baseUrl, 2],
+		'producturl' => 'direct_url',
+		'big_pic' => ['.', \$scanner->baseUrl, ['pr', '%%Usi', '', 1]],
+		'pris_inkmoms' => ['format_price', ['hu', 4]],
+		'lagerstatus' => ['if', ['pm', '%Out of stock%Usi', 'matchElement', 0], 'no', 'yes'],
+		'debug' => ['displayMatches'],
+	]
+);
+endsnippet
+
+snippet sscr "snipsnap" i
+\$scanner->setSubcategoryRegexp(
+	[
+		'regexp' => '%${9:<\s*a[^>]*href\s*=\s*[\'"]([^\'"]+)[\'"][^>]*>(?:<[^>]*>|\s)*?([^<]+)\s*<}%Usix',
+		'type' => 'pma',
+		'urlGroup' => 1,
+		'owncatGroup' => 2,
+		${10:'findGroup' => ${11:false},}
+
+		${5:'sliceRegexp' => '%${6:regexp}%Usix',
+		'sliceType' => '${7:pm}',
+		'sliceGroup' => ${8:0},}
+
+		${1:'sliceInSliceRegexp' => '%${2:regexp}%Usix',
+		'sliceInSliceType' => '${3:pm}',
+		'sliceInSliceGroup' => ${4:0},}
+
+		${12:'skip' => ${13:false},}
+		${14:'appendToUrl' => '${15}',}
+		${16:'debug' => ['displayMatches'],}
+	]
+);
+endsnippet
+
+snippet svar_ext
+class Scanner extends Agent_Scanner_General {
+	public function variations($match, $data) {
+		$this->matchElement = $match['matchingElement'];
+		$match[0] = $data['owncat'];
+		$productUrl = $match[$1];
+		$ppage = $this->openPage($productUrl);
+		${2:\$slice = Util_Regexp::pm('%${3:regexp}%Usi', $ppage, 1);}
+		if (preg_match_all('%${4:regexp}%Usi', \$slice, \$new_Stuff, PREG_SET_ORDER)) {
+			foreach (\$new_Stuff as \$stuff) {
+				$mm = array_replace(\$match, [
+					$5
+				];
+				$this->_populateProductArray($mm, $this->getProductRegexp());
+			}
+		}
+		else {
+			$this->_populateProductArray($match, $this->getProductRegexp());
+		}
+	}
+}
+endsnippet
+
+snippet mvar_ext
+class Scanner extends Agent_Scanner_General {
+	public function variations($matches, $data) {
+		foreach ($matches as $match) {
+			$this->matchElement = $match['matchingElement'];
+			$match[0] = $data['owncat'];
+			$productUrl = $match[$1];
+			$ppage = $this->openPage($productUrl);
+			${2:\$slice = Util_Regexp::pm('%${3:regexp}%Usi', $ppage, 1);}
+			if (preg_match_all('%${4:regexp}%Usi', \$slice, \$new_Stuff, PREG_SET_ORDER)) {
+				foreach (\$new_Stuff as \$stuff) {
+					$mm = array_replace(\$match, [
+						$5
+					];
+					$this->_populateProductArray($mm, $this->getProductRegexp());
+				}
+			}
+			else {
+				$this->_populateProductArray($match, $this->getProductRegexp());
+			}
+		}
+	}
+}
+endsnippet
